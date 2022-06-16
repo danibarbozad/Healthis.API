@@ -41,7 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnderecoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnidadeSaudeService.cs" />
+    <Compile Include="UsuarioService.cs" />
+    <Compile Include="VacinacaoService.cs" />
+    <Compile Include="VacinaService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Healthis.Entities\Healthis.Entities.csproj">
+      <Project>{CCDD62FD-9A57-4BDC-BE2A-09EB7D36D1F6}</Project>
+      <Name>Healthis.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Healthis.Model\Healthis.Model.csproj">
+      <Project>{AD837129-9E64-49EF-9FDF-6591DD3CB992}</Project>
+      <Name>Healthis.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
