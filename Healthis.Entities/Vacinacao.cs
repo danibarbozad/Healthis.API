@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Healthis.Entities.ApiEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +31,18 @@ namespace Healthis.Entities
         // DB_Column = unidade_saude_endereco_id_endereco
         public int EnderecoID { get; set; }
         public Endereco Endereco { get; set; }
+
+        public Vacinacao ConvertFromRequest(VacinacaoRequest request)
+        {
+            return new Vacinacao
+            {
+                DataVacinacao = request.DataVacinacao,
+                DataProximaDose = request.DataProximaDose,
+                Reacao = request.Reacao,
+                DescricaoReacao = request.DescricaoReacao,
+                UnidadeSaudeID = request.UnidadeSaudeID,
+                EnderecoID = request.EnderecoID
+            };
+        }
     }
 }

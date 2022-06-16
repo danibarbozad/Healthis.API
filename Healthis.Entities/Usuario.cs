@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Healthis.Entities.ApiEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,20 @@ namespace Healthis.Entities
         // DB_Column = endereco_id_endereco
         public int EnderecoID { get; set; }        
         public Endereco Endereco { get; set; }
+
+        public Usuario ConvertFromRequest(UsuarioRequest request)
+        {
+            return new Usuario
+            {
+                Nome = request.Nome,
+                CPF = request.CPF,
+                Sexo = request.Sexo,
+                DataNascimento = request.DataNascimento,
+                Email = request.Email,
+                Senha = request.Senha,
+                Telefone = request.Telefone,
+                EnderecoID = request.EnderecoID
+            };
+        }
     }
 }

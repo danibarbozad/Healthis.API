@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Healthis.Entities.ApiEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,15 @@ namespace Healthis.Entities
 
         // DB_Column = lote
         public string Lote { get; set; }
+
+        public Vacina ConvertFromRequest(VacinaRequest request)
+        {
+            return new Vacina
+            {
+                NomeVacina = request.NomeVacina,
+                QuantidadeDose = request.QuantidadeDose,
+                Validade = request.Validade,
+            };
+        }
     }
 }
