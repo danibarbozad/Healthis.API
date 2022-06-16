@@ -162,7 +162,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\EnderecoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UnidadeSaudeController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\VacinacaoController.cs" />
+    <Compile Include="Controllers\VacinaController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -252,6 +257,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Healthis.Entities\Healthis.Entities.csproj">
+      <Project>{CCDD62FD-9A57-4BDC-BE2A-09EB7D36D1F6}</Project>
+      <Name>Healthis.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Healthis.Service\Healthis.Service.csproj">
+      <Project>{20A768B1-8394-4BEF-A4E9-A03DFAAE1E02}</Project>
+      <Name>Healthis.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
