@@ -54,11 +54,7 @@ namespace Healthis.Model
                         cidade  = @Cidade, 
                         uf      = @UF
                     WHERE
-	                    id_endereco = @ID;
-    
-                    INSERT INTO endereco    (rua, bairro, numero, cep, cidade, uf) 
-                        VALUES              (@Rua, @Bairro, @Numero, @CEP, @Cidade, @UF);
-                    SELECT LAST_INSERT_ID() FROM endereco;";
+	                    id_endereco = @ID;";
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
