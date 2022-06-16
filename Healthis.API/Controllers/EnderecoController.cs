@@ -1,4 +1,5 @@
 ﻿using Healthis.Entities;
+using Healthis.Entities.ApiEntities;
 using Healthis.Service;
 using System;
 using System.Collections.Generic;
@@ -28,10 +29,10 @@ namespace Healthis.API.Controllers
 
         [HttpPost]
         [Route("api/endereco/create")]
-        public Endereco Create([FromBody] Endereco endereco)
+        public Endereco Create([FromBody] EnderecoRequest endereco)
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
-            return service.Create(endereco);
+            return service.Create(new Endereco().ConvertFromRequest(endereco));
         }
 
         [HttpPost]

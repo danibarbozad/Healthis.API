@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Healthis.Entities.ApiEntities;
 
 namespace Healthis.API.Controllers
 {
@@ -28,10 +29,10 @@ namespace Healthis.API.Controllers
 
         [HttpPost]
         [Route("api/vacina/create")]
-        public Vacina Create([FromBody] Vacina vacina)
+        public Vacina Create([FromBody] VacinaRequest vacina)
         {
             VacinaService service = new VacinaService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
-            return service.Create(vacina);
+            return service.Create(new Vacina().ConvertFromRequest(vacina));
         }
 
         [HttpPost]

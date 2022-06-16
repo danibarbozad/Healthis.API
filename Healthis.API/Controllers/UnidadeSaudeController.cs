@@ -7,6 +7,7 @@ using System.Web.Http;
 using Healthis.Entities;
 using Healthis.Service;
 using System.Configuration;
+using Healthis.Entities.ApiEntities;
 
 namespace Healthis.API.Controllers
 {
@@ -28,10 +29,10 @@ namespace Healthis.API.Controllers
 
         [HttpPost]
         [Route("api/unidadeSaude/create")]
-        public UnidadeSaude Create([FromBody] UnidadeSaude unidadeSaude)
+        public UnidadeSaude Create([FromBody] UnidadeSaudeRequest unidadeSaude)
         {
             UnidadeSaudeService service = new UnidadeSaudeService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
-            return service.Create(unidadeSaude);
+            return service.Create(new UnidadeSaude().ConvertFromRequest(unidadeSaude));
         }
 
         [HttpPost]

@@ -7,6 +7,7 @@ using System.Web.Http;
 using Healthis.Entities;
 using Healthis.Service;
 using System.Configuration;
+using Healthis.Entities.ApiEntities;
 
 namespace Healthis.API.Controllers
 {
@@ -28,10 +29,10 @@ namespace Healthis.API.Controllers
 
         [HttpPost]
         [Route("api/usuario/create")]
-        public Usuario Create([FromBody] Usuario usuario)
+        public Usuario Create([FromBody] UsuarioRequest usuario)
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
-            return service.Create(usuario);
+            return service.Create(new Usuario().ConvertFromRequest(usuario));
         }
 
         [HttpPost]
