@@ -36,7 +36,8 @@ namespace Healthis.Model
                         @Reacao,
                         @DescricaoReacao,
                         @UnidadeSaudeID,
-                        @EnderecoID);";
+                        @EnderecoID);
+                    SELECT LAST_INSERT_ID() FROM vacinacao;";
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
@@ -86,7 +87,7 @@ namespace Healthis.Model
             try
             {
                 string query = $@"
-                    DELETE FROM vacinacao WHERE id_vacinacao = @ID";
+                    DELETE FROM vacinacao WHERE id_vacinacao = @ID;";
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {

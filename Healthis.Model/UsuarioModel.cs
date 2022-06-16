@@ -40,7 +40,8 @@ namespace Healthis.Model
                         @Email,
                         @Senha,
                         @Telefone,
-                        @EnderecoID);";
+                        @EnderecoID);
+                    SELECT LAST_INSERT_ID() FROM usuario;";
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
@@ -92,7 +93,7 @@ namespace Healthis.Model
             try
             {
                 string query = $@"
-                    DELETE FROM usuario WHERE id_usuario = @ID";
+                    DELETE FROM usuario WHERE id_usuario = @ID;";
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {

@@ -104,11 +104,11 @@ namespace Healthis.Model
             {
                 string query = $@"
                     SELECT 
-                        id_vacina       AS @ID,
-                        nome_vacina     AS @NomeVacina,
-                        quantidade_dose AS @QuantidadeDose,
-                        validade        AS @Validade,
-                        lote            AS @Lote
+                        id_vacina       AS ID,
+                        nome_vacina     AS NomeVacina,
+                        quantidade_dose AS QuantidadeDose,
+                        validade        AS Validade,
+                        lote            AS Lote
                     FROM vacina;";
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
@@ -131,11 +131,11 @@ namespace Healthis.Model
             {
                 string query = $@"
                     SELECT 
-                        id_vacina       AS @ID,
-                        nome_vacina     AS @NomeVacina,
-                        quantidade_dose AS @QuantidadeDose,
-                        validade        AS @Validade,
-                        lote            AS @Lote
+                        id_vacina       AS ID,
+                        nome_vacina     AS NomeVacina,
+                        quantidade_dose AS QuantidadeDose,
+                        validade        AS Validade,
+                        lote            AS Lote
                     FROM vacina
                     WHERE id_vacina = @ID;";
 
