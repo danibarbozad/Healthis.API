@@ -19,7 +19,7 @@ namespace Healthis.Service
         public Endereco Create(Endereco endereco) => enderecoModel.Create(endereco);
         public Endereco Update(Endereco endereco) => enderecoModel.Update(endereco);
         public bool Delete(int enderecoID) => enderecoModel.Delete(enderecoID);
-        public List<Endereco> GetAll => enderecoModel.GetAll();
+        public List<Endereco> GetAll() => enderecoModel.GetAll();
         public Endereco Get(int enderecoID) => enderecoModel.Get(enderecoID);
     }
 }

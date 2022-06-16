@@ -19,7 +19,7 @@ namespace Healthis.Service
         public Vacina Create(Vacina vacina) => vacinaModel.Create(vacina);
         public Vacina Update(Vacina vacina) => vacinaModel.Update(vacina);
         public bool Delete(int vacinaID) => vacinaModel.Delete(vacinaID);
-        public List<Vacina> GetAll => vacinaModel.GetAll();
+        public List<Vacina> GetAll() => vacinaModel.GetAll();
         public Vacina Get(int vacinaID) => vacinaModel.Get(vacinaID);
     }
 }

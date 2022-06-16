@@ -19,7 +19,7 @@ namespace Healthis.Service
         public UnidadeSaude Create(UnidadeSaude unidadeSaude) => unidadeSaudeModel.Create(unidadeSaude);
         public UnidadeSaude Update(UnidadeSaude unidadeSaude) => unidadeSaudeModel.Update(unidadeSaude);
         public bool Delete(int unidadeSaudeID) => unidadeSaudeModel.Delete(unidadeSaudeID);
-        public List<UnidadeSaude> GetAll => unidadeSaudeModel.GetAll();
+        public List<UnidadeSaude> GetAll() => unidadeSaudeModel.GetAll();
         public UnidadeSaude Get(int unidadeSaudeID) => unidadeSaudeModel.Get(unidadeSaudeID);
     }
 }
