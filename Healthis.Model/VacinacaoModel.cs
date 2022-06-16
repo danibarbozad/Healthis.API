@@ -80,7 +80,7 @@ namespace Healthis.Model
             return vacinacao;
         }
 
-        public Boolean Delete(int vacinaID)
+        public Boolean Delete(int vacinacaoID)
         {
             int success;
             try
@@ -90,7 +90,7 @@ namespace Healthis.Model
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
-                    success = conn.Execute(query, new { ID = vacinaID });
+                    success = conn.Execute(query, new { ID = vacinacaoID });
                 }
             }
             catch (Exception ex)
