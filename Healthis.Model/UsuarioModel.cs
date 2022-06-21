@@ -131,6 +131,9 @@ namespace Healthis.Model
                 {
                     listaUsuarios = conn.Query<Usuario>(query).ToList();
                 }
+
+                foreach (Usuario usuario in listaUsuarios)
+                    usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
             }
             catch (Exception ex)
             {
@@ -163,6 +166,8 @@ namespace Healthis.Model
                 {
                     usuario = conn.Query<Usuario>(query, new { ID }).FirstOrDefault();
                 }
+
+                usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
             }
             catch (Exception ex)
             {
