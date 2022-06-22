@@ -123,6 +123,12 @@ namespace Healthis.Model
                 {
                     listaVacinacoes = conn.Query<Vacinacao>(query).ToList();
                 }
+
+                foreach (Vacinacao vacinacao in listaVacinacoes)
+                {
+                    vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
+                    vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
+                }
             }
             catch (Exception ex)
             {
@@ -153,6 +159,9 @@ namespace Healthis.Model
                 {
                     vacinacao = conn.Query<Vacinacao>(query, new { ID }).FirstOrDefault();
                 }
+
+                vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
+                vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
             }
             catch (Exception ex)
             {
