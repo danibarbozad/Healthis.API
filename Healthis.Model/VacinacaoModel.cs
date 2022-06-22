@@ -134,7 +134,8 @@ namespace Healthis.Model
                 {
                     vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
                     vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
-                }
+                    vacinacao.Vacinas = GetVacinacaoVacinas(vacinacao.ID);
+                }               
             }
             catch (Exception ex)
             {
@@ -168,6 +169,7 @@ namespace Healthis.Model
 
                 vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
                 vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
+                vacinacao.Vacinas = GetVacinacaoVacinas(vacinacao.ID);
             }
             catch (Exception ex)
             {
@@ -175,6 +177,62 @@ namespace Healthis.Model
             }
 
             return vacinacao;
+        }
+
+        public Boolean AssociarVacinaVacinacao(int vacinaID, int vacinacaoID)
+        {
+            try
+            {
+                string query = $@"
+                    INSERT INTO vacina_has_vacinacao
+	                    (vacina_id_vacina,
+	                    vacinacao_id_vacinacao)
+                    VALUES
+	                    (@VacinaID,
+	                    @VacinacaoID);";
+
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Execute(query, new { VacinaID = vacinaID, VacinacaoID = vacinacaoID });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return true;
+        }
+
+        public List<Vacina> GetVacinacaoVacinas(int vacinacaoID)
+        {
+            List<Vacina> vacinas = new List<Vacina>();
+            try
+            {
+                string query = $@"
+                     SELECT 
+	                    id_vacina       AS ID,
+                        nome_vacina     AS NomeVacina,
+                        quantidade_dose AS QuantidadeDose,
+                        validade        AS Validade,
+                        lote            AS Lote
+                    FROM 
+	                    vacina_has_vacinacao
+                    INNER JOIN vacinacao ON vacinacao.id_vacinacao = vacina_has_vacinacao.vacinacao_id_vacinacao
+                    INNER JOIN vacina ON vacina.id_vacina = vacina_has_vacinacao.vacina_id_vacina
+                    WHERE vacinacao.id_vacinacao = @ID;";
+
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    vacinas = conn.Query<Vacina>(query, new { ID = vacinacaoID }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return vacinas;
         }
     }
 }

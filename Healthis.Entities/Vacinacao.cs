@@ -32,6 +32,9 @@ namespace Healthis.Entities
         public int EnderecoID { get; set; }
         public Endereco Endereco { get; set; }
 
+        public List<Vacina> Vacinas { get; set; }
+        public bool VacinacaoHasVacinas { get { return Vacinas?.Count > 0; } }
+
         public Vacinacao ConvertFromRequest(VacinacaoRequest request)
         {
             return new Vacinacao

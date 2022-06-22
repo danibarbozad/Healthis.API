@@ -14,6 +14,7 @@ namespace Healthis.API.Controllers
     public class UnidadeSaudeController : ApiController
     {
         [HttpGet]
+        [Route("api/healthUnity")]
         public List<UnidadeSaude> Get()
         {
             UnidadeSaudeService service = new UnidadeSaudeService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -21,6 +22,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/healthUnity/{id}")]
         public UnidadeSaude Get(int id)
         {
             UnidadeSaudeService service = new UnidadeSaudeService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -28,7 +30,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/unidadeSaude/create")]
+        [Route("api/healthUnity/create")]
         public UnidadeSaude Create([FromBody] UnidadeSaudeRequest unidadeSaude)
         {
             UnidadeSaudeService service = new UnidadeSaudeService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -36,7 +38,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/unidadeSaude/update")]
+        [Route("api/healthUnity/update")]
         public UnidadeSaude Update([FromBody] UnidadeSaude unidadeSaude)
         {
             UnidadeSaudeService service = new UnidadeSaudeService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -44,7 +46,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/unidadeSaude/delete/{id}")]
+        [Route("api/healthUnity/delete/{id}")]
         public bool Delete(int id)
         {
             UnidadeSaudeService service = new UnidadeSaudeService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);

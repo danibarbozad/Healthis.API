@@ -14,6 +14,7 @@ namespace Healthis.API.Controllers
     public class EnderecoController : ApiController
     {
         [HttpGet]
+        [Route("api/address")]
         public List<Endereco> Get()
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -21,6 +22,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/address/{id}")]
         public Endereco Get(int id)
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -28,7 +30,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/endereco/create")]
+        [Route("api/address/create")]
         public Endereco Create([FromBody] EnderecoRequest endereco)
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -36,7 +38,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/endereco/update")]
+        [Route("api/address/update")]
         public Endereco Update([FromBody] Endereco endereco)
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -44,7 +46,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/endereco/delete/{id}")]
+        [Route("api/address/delete/{id}")]
         public bool Delete(int id)
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);

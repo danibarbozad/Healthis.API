@@ -14,6 +14,7 @@ namespace Healthis.API.Controllers
     public class VacinaController : ApiController
     {
         [HttpGet]
+        [Route("api/vaccine")]
         public List<Vacina> Get()
         {
             VacinaService service = new VacinaService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -21,6 +22,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/vaccine/{id}")]
         public Vacina Get(int id)
         {
             VacinaService service = new VacinaService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -28,7 +30,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/vacina/create")]
+        [Route("api/vaccine/create")]
         public Vacina Create([FromBody] VacinaRequest vacina)
         {
             VacinaService service = new VacinaService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -36,7 +38,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/vacina/update")]
+        [Route("api/vaccine/update")]
         public Vacina Update([FromBody] Vacina vacina)
         {
             VacinaService service = new VacinaService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -44,7 +46,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/vacina/delete/{id}")]
+        [Route("api/vaccine/delete/{id}")]
         public bool Delete(int id)
         {
             VacinaService service = new VacinaService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);

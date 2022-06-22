@@ -14,6 +14,7 @@ namespace Healthis.API.Controllers
     public class VacinacaoController : ApiController
     {
         [HttpGet]
+        [Route("api/vaccination")]
         public List<Vacinacao> Get()
         {
             VacinacaoService service = new VacinacaoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -21,6 +22,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/vaccination/{id}")]
         public Vacinacao Get(int id)
         {
             VacinacaoService service = new VacinacaoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -28,7 +30,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/vacinacao/create")]
+        [Route("api/vaccination/create")]
         public Vacinacao Create([FromBody] VacinacaoRequest vacinacao)
         {
             VacinacaoService service = new VacinacaoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -36,7 +38,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/vacinacao/update")]
+        [Route("api/vaccination/update")]
         public Vacinacao Update([FromBody] Vacinacao vacinacao)
         {
             VacinacaoService service = new VacinacaoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -44,11 +46,22 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/vacinacao/delete/{id}")]
+        [Route("api/vaccination/delete/{id}")]
         public bool Delete(int id)
         {
             VacinacaoService service = new VacinacaoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
             return service.Delete(id);
+        }
+
+        [HttpPost]
+        [Route("api/vaccination/vaccinationVacines")]
+        public IHttpActionResult VincularVacinaVacinacao([FromBody] VacinaVacinacaoRequest request)
+        {
+            VacinacaoService service = new VacinacaoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
+            if (service.AssociarVacinaVacinacao(request.VacinaID, request.VacinacaoID))
+                return Ok(String.Format("Vacina associada com sucesso à vacinação ID: " + request.VacinacaoID));
+            else
+                return BadRequest("Erro ao associar vacina com vacinação!");
         }
     }
 }

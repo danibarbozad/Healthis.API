@@ -21,5 +21,6 @@ namespace Healthis.Service
         public bool Delete(int vacinacaoID) => vacinacaoModel.Delete(vacinacaoID);
         public List<Vacinacao> GetAll() => vacinacaoModel.GetAll();
         public Vacinacao Get(int vacinacaoID) => vacinacaoModel.Get(vacinacaoID);
+        public bool AssociarVacinaVacinacao(int vacinaID, int vacinacaoID) => vacinacaoModel.AssociarVacinaVacinacao(vacinaID, vacinacaoID);
     }
 }

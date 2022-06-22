@@ -15,6 +15,7 @@ namespace Healthis.API.Controllers
     public class UsuarioController : ApiController
     {
         [HttpGet]
+        [Route("api/user")]
         public List<Usuario> Get()
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -22,6 +23,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/user/{id}")]
         public Usuario Get(int id)
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -29,7 +31,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/usuario/create")]
+        [Route("api/user/create")]
         public Usuario Create([FromBody] UsuarioRequest usuario)
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -37,7 +39,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/usuario/update")]
+        [Route("api/user/update")]
         public Usuario Update([FromBody] Usuario usuario)
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -45,7 +47,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/usuario/delete/{id}")]
+        [Route("api/user/delete/{id}")]
         public bool Delete(int id)
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
@@ -53,7 +55,7 @@ namespace Healthis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/usuario/userVaccination")]
+        [Route("api/user/userVaccination")]
         public IHttpActionResult VincularVacinacaoUsuario([FromBody] VacinacaoUsuarioRequest request)
         {
             UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
