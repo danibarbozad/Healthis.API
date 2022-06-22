@@ -31,6 +31,7 @@ namespace Healthis.Entities
                 NomeVacina = request.NomeVacina,
                 QuantidadeDose = request.QuantidadeDose,
                 Validade = request.Validade,
+                Lote = request.Lote
             };
         }
     }

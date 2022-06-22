@@ -45,6 +45,7 @@
     <Compile Include="ApiEntities\UnidadeSaudeRequest.cs" />
     <Compile Include="ApiEntities\UsuarioRequest.cs" />
     <Compile Include="ApiEntities\VacinacaoRequest.cs" />
+    <Compile Include="ApiEntities\VacinacaoUsuarioRequest.cs" />
     <Compile Include="ApiEntities\VacinaRequest.cs" />
     <Compile Include="Endereco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

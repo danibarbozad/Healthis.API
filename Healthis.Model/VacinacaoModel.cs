@@ -44,6 +44,9 @@ namespace Healthis.Model
                     int id = conn.Query<int>(query, vacinacao).FirstOrDefault();
                     vacinacao.ID = id;
                 }
+
+                vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
+                vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
             }
             catch (Exception ex)
             {
@@ -72,6 +75,9 @@ namespace Healthis.Model
                 {
                     conn.Execute(query, vacinacao);
                 }
+
+                vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
+                vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
             }
             catch (Exception ex)
             {

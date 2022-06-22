@@ -48,6 +48,8 @@ namespace Healthis.Model
                     int id = conn.Query<int>(query, usuario).FirstOrDefault();
                     usuario.ID = id;
                 }
+
+                usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
             }
             catch (Exception ex)
             {
@@ -133,7 +135,10 @@ namespace Healthis.Model
                 }
 
                 foreach (Usuario usuario in listaUsuarios)
+                {
                     usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
+                    usuario.Vacinacoes = GetUsuarioVacinacoes(usuario.ID);
+                }
             }
             catch (Exception ex)
             {
@@ -168,6 +173,7 @@ namespace Healthis.Model
                 }
 
                 usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
+                usuario.Vacinacoes = GetUsuarioVacinacoes(ID);
             }
             catch (Exception ex)
             {
@@ -175,6 +181,66 @@ namespace Healthis.Model
             }
 
             return usuario;
+        }
+
+        public List<Vacinacao> GetUsuarioVacinacoes(int usuarioID)
+        {
+            List<Vacinacao> vacinacoes = new List<Vacinacao>();
+            try
+            {
+                string query = $@"
+                    SELECT 
+	                    vacinacao.id_vacinacao AS ID,
+	                    vacinacao.dt_vacinacao AS DataVacinacao,
+	                    vacinacao.dt_proxima_dose AS DataProximaDose,
+	                    vacinacao.reacao AS Reacao,
+	                    vacinacao.descricao_reacao AS DescricaoReacao,
+	                    vacinacao.unidade_saude_id_unidade_saude AS UnidadeSaudeID,
+	                    vacinacao.unidade_saude_endereco_id_endereco AS EnderecoID
+                    FROM 
+	                    usuario_has_vacinacao
+                    INNER JOIN vacinacao ON vacinacao.id_vacinacao = usuario_has_vacinacao.vacinacao_id_vacinacao
+                    INNER JOIN usuario ON usuario.id_usuario = usuario_has_vacinacao.usuario_id_usuario
+                    WHERE
+	                    usuario_id_usuario = @ID;";
+
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    vacinacoes = conn.Query<Vacinacao>(query, new { ID = usuarioID }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return vacinacoes;
+        }
+
+        public bool VincularVacinacaoUsuario(int usuarioID, int vacinacaoID)
+        {
+            try
+            {
+                string query = $@"
+                    INSERT INTO usuario_has_vacinacao
+                        (usuario_id_usuario,
+                        vacinacao_id_vacinacao)
+                    VALUES
+                        (@UsuarioID,
+                        @VacinacaoID);
+                    SELECT LAST_INSERT_ID() FROM usuario_has_vacinacao;";
+
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Execute(query, new { UsuarioID = usuarioID, VacinacaoID = vacinacaoID });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return true;
         }
     }
 }

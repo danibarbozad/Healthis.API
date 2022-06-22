@@ -36,6 +36,8 @@ namespace Healthis.Model
                     int id = conn.Query<int>(query, unidadeSaude).FirstOrDefault();
                     unidadeSaude.ID = id;
                 }
+
+                unidadeSaude.Endereco = new EnderecoModel(_connectionString).Get(unidadeSaude.EnderecoID);
             }
             catch (Exception ex)
             {
@@ -60,6 +62,8 @@ namespace Healthis.Model
                 {
                     conn.Execute(query, unidadeSaude);
                 }
+
+                unidadeSaude.Endereco = new EnderecoModel(_connectionString).Get(unidadeSaude.EnderecoID);
             }
             catch (Exception ex)
             {

@@ -7,9 +7,6 @@ namespace Healthis.Entities.ApiEntities
 {
     public class UnidadeSaudeRequest
     {
-        // DB_Column = id_unidade_saude
-        public int ID { get; set; }
-
         // DB_Column = nome_unidade
         public string NomeUnidade { get; set; }
 

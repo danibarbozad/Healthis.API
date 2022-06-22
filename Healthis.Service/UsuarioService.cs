@@ -21,5 +21,6 @@ namespace Healthis.Service
         public bool Delete(int usuarioID) => usuarioModel.Delete(usuarioID);
         public List<Usuario> GetAll() => usuarioModel.GetAll();
         public Usuario Get(int usuarioID) => usuarioModel.Get(usuarioID);
+        public bool VincularVacinacaoUsuario(int usuarioID, int vacinacaoID) => usuarioModel.VincularVacinacaoUsuario(usuarioID, vacinacaoID);
     }
 }
