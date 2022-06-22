@@ -92,7 +92,7 @@ namespace Healthis.Model
 
         public List<UnidadeSaude> GetAll()
         {
-            List<UnidadeSaude> listaUnidadeSaudes = new List<UnidadeSaude>();
+            List<UnidadeSaude> listaUnidadesSaude = new List<UnidadeSaude>();
 
             try
             {
@@ -105,15 +105,18 @@ namespace Healthis.Model
 
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
-                    listaUnidadeSaudes = conn.Query<UnidadeSaude>(query).ToList();
+                    listaUnidadesSaude = conn.Query<UnidadeSaude>(query).ToList();
                 }
+
+                foreach (UnidadeSaude unidadeSaude in listaUnidadesSaude)
+                    unidadeSaude.Endereco = new EnderecoModel(_connectionString).Get(unidadeSaude.EnderecoID);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return listaUnidadeSaudes;
+            return listaUnidadesSaude;
         }
 
         public UnidadeSaude Get(int ID)
@@ -133,6 +136,8 @@ namespace Healthis.Model
                 {
                     unidadeSaude = conn.Query<UnidadeSaude>(query, new { ID }).FirstOrDefault();
                 }
+
+                unidadeSaude.Endereco = new EnderecoModel(_connectionString).Get(unidadeSaude.EnderecoID);
             }
             catch (Exception ex)
             {
