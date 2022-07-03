@@ -13,6 +13,7 @@ namespace Healthis.API.Controllers
 {
     public class EnderecoController : ApiController
     {
+        [Authorize]
         [HttpGet]
         [Route("api/address")]
         public List<Endereco> Get()
@@ -21,6 +22,7 @@ namespace Healthis.API.Controllers
             return service.GetAll();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/address/{id}")]
         public Endereco Get(int id)
@@ -29,6 +31,7 @@ namespace Healthis.API.Controllers
             return service.Get(id);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("api/address/create")]
         public Endereco Create([FromBody] EnderecoRequest endereco)
@@ -37,6 +40,7 @@ namespace Healthis.API.Controllers
             return service.Create(new Endereco().ConvertFromRequest(endereco));
         }
 
+        [Authorize]
         [HttpPost]
         [Route("api/address/update")]
         public Endereco Update([FromBody] Endereco endereco)
@@ -45,6 +49,7 @@ namespace Healthis.API.Controllers
             return service.Update(endereco);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("api/address/delete/{id}")]
         public bool Delete(int id)
