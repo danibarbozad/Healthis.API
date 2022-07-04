@@ -17,8 +17,6 @@ namespace Healthis.Entities.ApiEntities
         public DateTime DataNascimento { get; set; }
         // DB_Column = email
         public string Email { get; set; }
-        // DB_Column = senha
-        public string Senha { get; set; }
         // DB_Column = telefone
         public string Telefone { get; set; }
         // DB_Column = endereco_id_endereco

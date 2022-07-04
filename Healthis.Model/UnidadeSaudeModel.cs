@@ -3,6 +3,7 @@ using Healthis.Entities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Healthis.Model
                         @EnderecoID);
                     SELECT LAST_INSERT_ID() FROM unidade_saude;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     int id = conn.Query<int>(query, unidadeSaude).FirstOrDefault();
                     unidadeSaude.ID = id;
@@ -58,7 +59,7 @@ namespace Healthis.Model
                         endereco_id_endereco = @EnderecoID
                     WHERE id_unidade_saude = @ID AND endereco_id_endereco = @EnderecoID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, unidadeSaude);
                 }
@@ -81,7 +82,7 @@ namespace Healthis.Model
                 string query = $@"
                     DELETE FROM unidade_saude WHERE id_unidade_saude = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     success = conn.Execute(query, new { ID = unidadeSaudeID });
                 }
@@ -107,7 +108,7 @@ namespace Healthis.Model
                         unidade_saude.endereco_id_endereco  AS EnderecoID
                     FROM unidade_saude;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     listaUnidadesSaude = conn.Query<UnidadeSaude>(query).ToList();
                 }
@@ -136,7 +137,7 @@ namespace Healthis.Model
                     FROM unidade_saude
                     WHERE id_unidade_saude = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     unidadeSaude = conn.Query<UnidadeSaude>(query, new { ID }).FirstOrDefault();
                 }

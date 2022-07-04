@@ -3,6 +3,7 @@ using Healthis.Entities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Healthis.Model
                         VALUES              (@Rua, @Bairro, @Numero, @CEP, @Cidade, @UF);
                     SELECT LAST_INSERT_ID() FROM endereco;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     int id = conn.Query<int>(query, endereco).FirstOrDefault();
                     endereco.ID = id;
@@ -56,7 +57,7 @@ namespace Healthis.Model
                     WHERE
 	                    id_endereco = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, endereco);
                 }
@@ -77,7 +78,7 @@ namespace Healthis.Model
                 string query = $@"
                     DELETE FROM endereco WHERE id_endereco = @ID";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     success = conn.Execute(query, new { ID = enderecoID });
                 }
@@ -107,7 +108,7 @@ namespace Healthis.Model
                         uf AS UF 
                     FROM endereco;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     listaEnderecos = conn.Query<Endereco>(query).ToList();
                 }
@@ -137,7 +138,7 @@ namespace Healthis.Model
                     FROM endereco
                     WHERE id_endereco = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     endereco = conn.Query<Endereco>(query, new { ID }).FirstOrDefault();
                 }

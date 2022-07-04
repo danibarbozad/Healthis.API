@@ -21,8 +21,6 @@ namespace Healthis.Entities
         public DateTime DataNascimento { get; set; }
         // DB_Column = email
         public string Email { get; set; }
-        // DB_Column = senha
-        public string Senha { get; set; }
         // DB_Column = telefone
         public string Telefone { get; set; }
         // DB_Column = endereco_id_endereco
@@ -41,7 +39,6 @@ namespace Healthis.Entities
                 Sexo = request.Sexo,
                 DataNascimento = request.DataNascimento,
                 Email = request.Email,
-                Senha = request.Senha,
                 Telefone = request.Telefone,
                 EnderecoID = request.EnderecoID
             };

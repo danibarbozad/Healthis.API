@@ -9,7 +9,7 @@ namespace Healthis.API.Authentication
     public class AuthContext : IdentityDbContext<IdentityUser>
     {
         public AuthContext() 
-            : base("HealthisAuth")
+            : base("HealthisDB")
         {
 
         }

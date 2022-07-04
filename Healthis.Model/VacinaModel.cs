@@ -3,6 +3,7 @@ using Healthis.Entities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Healthis.Model
                         @Lote);
                     SELECT LAST_INSERT_ID() FROM vacina;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     int id = conn.Query<int>(query, vacina).FirstOrDefault();
                     vacina.ID = id;
@@ -62,7 +63,7 @@ namespace Healthis.Model
                         lote = @Lote
                     WHERE id_vacina = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, vacina);
                 }
@@ -83,7 +84,7 @@ namespace Healthis.Model
                 string query = $@"
                     DELETE FROM vacina WHERE id_vacina = @ID";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     success = conn.Execute(query, new { ID = vacinaID });
                 }
@@ -111,7 +112,7 @@ namespace Healthis.Model
                         lote            AS Lote
                     FROM vacina;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     listaVacinas = conn.Query<Vacina>(query).ToList();
                 }
@@ -139,7 +140,7 @@ namespace Healthis.Model
                     FROM vacina
                     WHERE id_vacina = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     vacina = conn.Query<Vacina>(query, new { ID }).FirstOrDefault();
                 }

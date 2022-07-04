@@ -3,6 +3,7 @@ using Healthis.Entities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace Healthis.Model
                         @EnderecoID);
                     SELECT LAST_INSERT_ID() FROM vacinacao;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     int id = conn.Query<int>(query, vacinacao).FirstOrDefault();
                     vacinacao.ID = id;
@@ -71,7 +72,7 @@ namespace Healthis.Model
                         unidade_saude_endereco_id_endereco = @EnderecoID
                     WHERE id_vacinacao = @ID AND unidade_saude_id_unidade_saude = @UnidadeSaudeID AND unidade_saude_endereco_id_endereco = @EnderecoID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, vacinacao);
                 }
@@ -95,7 +96,7 @@ namespace Healthis.Model
                 string query = $@"
                     DELETE FROM vacinacao WHERE id_vacinacao = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     success = conn.Execute(query, new { ID = vacinacaoID });
                 }
@@ -125,7 +126,7 @@ namespace Healthis.Model
                         unidade_saude_endereco_id_endereco AS EnderecoID
                     FROM vacinacao;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     listaVacinacoes = conn.Query<Vacinacao>(query).ToList();
                 }
@@ -162,7 +163,7 @@ namespace Healthis.Model
                     FROM vacinacao;
                     WHERE id_vacinacao = @ID";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     vacinacao = conn.Query<Vacinacao>(query, new { ID }).FirstOrDefault();
                 }
@@ -191,7 +192,7 @@ namespace Healthis.Model
 	                    (@VacinaID,
 	                    @VacinacaoID);";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, new { VacinaID = vacinaID, VacinacaoID = vacinacaoID });
                 }
@@ -222,7 +223,7 @@ namespace Healthis.Model
                     INNER JOIN vacina ON vacina.id_vacina = vacina_has_vacinacao.vacina_id_vacina
                     WHERE vacinacao.id_vacinacao = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     vacinas = conn.Query<Vacina>(query, new { ID = vacinacaoID }).ToList();
                 }

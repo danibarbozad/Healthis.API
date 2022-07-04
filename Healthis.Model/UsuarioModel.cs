@@ -3,6 +3,7 @@ using Healthis.Entities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,6 @@ namespace Healthis.Model
                         sexo,
                         dt_nascimento,
                         email,
-                        senha,
                         telefone,
                         endereco_id_endereco)
                     VALUES
@@ -38,12 +38,11 @@ namespace Healthis.Model
                         @Sexo,
                         @DataNascimento,
                         @Email,
-                        @Senha,
                         @Telefone,
                         @EnderecoID);
                     SELECT LAST_INSERT_ID() FROM usuario;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     int id = conn.Query<int>(query, usuario).FirstOrDefault();
                     usuario.ID = id;
@@ -71,12 +70,11 @@ namespace Healthis.Model
                         sexo = @Sexo,
                         dt_nascimento = @DataNascimento,
                         email = @Email,
-                        senha = @Senha,
                         telefone = @Telefone,
                         endereco_id_endereco = @EnderecoID
                     WHERE id_usuario = @ID AND endereco_id_endereco = @EnderecoID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, usuario);
                 }
@@ -97,7 +95,7 @@ namespace Healthis.Model
                 string query = $@"
                     DELETE FROM usuario WHERE id_usuario = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     success = conn.Execute(query, new { ID = usuarioID });
                 }
@@ -124,12 +122,11 @@ namespace Healthis.Model
                         sexo AS Sexo,
                         dt_nascimento AS DataNascimento,
                         email AS Email,
-                        senha AS Senha,
                         telefone AS Telefone,
                         endereco_id_endereco AS EnderecoID
                     FROM usuario;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     listaUsuarios = conn.Query<Usuario>(query).ToList();
                 }
@@ -161,13 +158,12 @@ namespace Healthis.Model
                         sexo AS Sexo,
                         dt_nascimento AS DataNascimento,
                         email AS Email,
-                        senha AS Senha,
                         telefone AS Telefone,
                         endereco_id_endereco AS EnderecoID
                     FROM usuario
                     WHERE id_usuario = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     usuario = conn.Query<Usuario>(query, new { ID }).FirstOrDefault();
                 }
@@ -204,7 +200,7 @@ namespace Healthis.Model
                     WHERE
 	                    usuario_id_usuario = @ID;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     vacinacoes = conn.Query<Vacinacao>(query, new { ID = usuarioID }).ToList();
                 }
@@ -230,7 +226,7 @@ namespace Healthis.Model
                         @VacinacaoID);
                     SELECT LAST_INSERT_ID() FROM usuario_has_vacinacao;";
 
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Execute(query, new { UsuarioID = usuarioID, VacinacaoID = vacinacaoID });
                 }
