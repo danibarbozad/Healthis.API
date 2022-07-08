@@ -24,9 +24,8 @@ namespace Healthis.Model
             try
             {
                 string query = $@"
-                    INSERT INTO endereco    (rua, bairro, numero, cep, cidade, uf) 
-                        VALUES              (@Rua, @Bairro, @Numero, @CEP, @Cidade, @UF);
-                    SELECT LAST_INSERT_ID() FROM endereco;";
+                    INSERT INTO endereco    (rua, bairro, numero, cep, cidade, uf) OUTPUT Inserted.id_endereco
+                        VALUES              (@Rua, @Bairro, @Numero, @CEP, @Cidade, @UF);";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {

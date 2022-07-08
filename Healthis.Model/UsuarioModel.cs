@@ -31,7 +31,9 @@ namespace Healthis.Model
                         dt_nascimento,
                         email,
                         telefone,
-                        endereco_id_endereco)
+                        endereco_id_endereco,
+                        username)
+                    OUTPUT Inserted.id_usuario
                     VALUES
                         (@Nome,
                         @CPF,
@@ -39,8 +41,8 @@ namespace Healthis.Model
                         @DataNascimento,
                         @Email,
                         @Telefone,
-                        @EnderecoID);
-                    SELECT LAST_INSERT_ID() FROM usuario;";
+                        @EnderecoID,
+                        @UserName);";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -48,7 +50,8 @@ namespace Healthis.Model
                     usuario.ID = id;
                 }
 
-                usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
+                if (usuario.EnderecoID.HasValue)
+                    usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID.Value);
             }
             catch (Exception ex)
             {
@@ -69,10 +72,9 @@ namespace Healthis.Model
                         cpf = @CPF,
                         sexo = @Sexo,
                         dt_nascimento = @DataNascimento,
-                        email = @Email,
                         telefone = @Telefone,
                         endereco_id_endereco = @EnderecoID
-                    WHERE id_usuario = @ID AND endereco_id_endereco = @EnderecoID;";
+                    WHERE id_usuario = @ID;";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -123,7 +125,8 @@ namespace Healthis.Model
                         dt_nascimento AS DataNascimento,
                         email AS Email,
                         telefone AS Telefone,
-                        endereco_id_endereco AS EnderecoID
+                        endereco_id_endereco AS EnderecoID,
+                        username AS UserName
                     FROM usuario;";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -133,7 +136,8 @@ namespace Healthis.Model
 
                 foreach (Usuario usuario in listaUsuarios)
                 {
-                    usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
+                    if (usuario.EnderecoID.HasValue)
+                        usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID.Value);
                     usuario.Vacinacoes = GetUsuarioVacinacoes(usuario.ID);
                 }
             }
@@ -159,7 +163,8 @@ namespace Healthis.Model
                         dt_nascimento AS DataNascimento,
                         email AS Email,
                         telefone AS Telefone,
-                        endereco_id_endereco AS EnderecoID
+                        endereco_id_endereco AS EnderecoID,
+                        username AS UserName
                     FROM usuario
                     WHERE id_usuario = @ID;";
 
@@ -168,7 +173,11 @@ namespace Healthis.Model
                     usuario = conn.Query<Usuario>(query, new { ID }).FirstOrDefault();
                 }
 
-                usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID);
+                if (usuario == null)
+                    return usuario;
+
+                if (usuario.EnderecoID.HasValue)
+                    usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID.Value);
                 usuario.Vacinacoes = GetUsuarioVacinacoes(ID);
             }
             catch (Exception ex)
@@ -223,8 +232,7 @@ namespace Healthis.Model
                         vacinacao_id_vacinacao)
                     VALUES
                         (@UsuarioID,
-                        @VacinacaoID);
-                    SELECT LAST_INSERT_ID() FROM usuario_has_vacinacao;";
+                        @VacinacaoID);";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {

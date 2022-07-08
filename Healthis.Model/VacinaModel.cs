@@ -29,12 +29,12 @@ namespace Healthis.Model
                         quantidade_dose,
                         validade,
                         lote)
+                    OUTPUT Inserted.id_vacina
                     VALUES
                         (@NomeVacina,
                         @QuantidadeDose,
                         @Validade,
-                        @Lote);
-                    SELECT LAST_INSERT_ID() FROM vacina;";
+                        @Lote);";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {

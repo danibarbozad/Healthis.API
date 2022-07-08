@@ -17,7 +17,11 @@ namespace Healthis.Service
         }
 
         public Usuario Create(Usuario usuario) => usuarioModel.Create(usuario);
-        public Usuario Update(Usuario usuario) => usuarioModel.Update(usuario);
+        public Usuario Update(Usuario usuario)
+        {
+            return Get(usuarioModel.Update(usuario).ID);
+        }
+
         public bool Delete(int usuarioID) => usuarioModel.Delete(usuarioID);
         public List<Usuario> GetAll() => usuarioModel.GetAll();
         public Usuario Get(int usuarioID) => usuarioModel.Get(usuarioID);

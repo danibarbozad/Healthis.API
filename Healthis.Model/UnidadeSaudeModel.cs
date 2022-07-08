@@ -27,10 +27,10 @@ namespace Healthis.Model
                     INSERT INTO unidade_saude
                         (nome_unidade,
                         endereco_id_endereco)
+                    OUTPUT Inserted.id_unidade_saude
                     VALUES
                         (@NomeUnidade,
-                        @EnderecoID);
-                    SELECT LAST_INSERT_ID() FROM unidade_saude;";
+                        @EnderecoID);";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -141,6 +141,9 @@ namespace Healthis.Model
                 {
                     unidadeSaude = conn.Query<UnidadeSaude>(query, new { ID }).FirstOrDefault();
                 }
+
+                if (unidadeSaude == null)
+                    return unidadeSaude;
 
                 unidadeSaude.Endereco = new EnderecoModel(_connectionString).Get(unidadeSaude.EnderecoID);
             }

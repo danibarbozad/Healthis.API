@@ -43,19 +43,35 @@ namespace Healthis.API.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/address/update")]
-        public Endereco Update([FromBody] Endereco endereco)
+        public IHttpActionResult Update([FromBody] Endereco endereco)
         {
             EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
-            return service.Update(endereco);
+
+            if (service.Get(endereco.ID) == null)
+                return BadRequest("Endereço não localizado!");
+
+            return Ok(service.Update(endereco));
         }
 
         [Authorize]
         [HttpPost]
         [Route("api/address/delete/{id}")]
-        public bool Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
-            EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
-            return service.Delete(id);
+            try
+            {
+                EnderecoService service = new EnderecoService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
+                if (service.Delete(id))
+                    return Ok("Endereço deletado com sucesso!");
+                else
+                {
+                    return BadRequest("Endereço não localizado!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
     }
 }

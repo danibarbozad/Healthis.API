@@ -31,14 +31,14 @@ namespace Healthis.Model
                         descricao_reacao,
                         unidade_saude_id_unidade_saude,
                         unidade_saude_endereco_id_endereco)
+                    OUTPUT Inserted.id_vacinacao
                     VALUES
                         (@DataVacinacao,
                         @DataProximaDose,
                         @Reacao,
                         @DescricaoReacao,
                         @UnidadeSaudeID,
-                        @EnderecoID);
-                    SELECT LAST_INSERT_ID() FROM vacinacao;";
+                        @EnderecoID);";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -160,7 +160,7 @@ namespace Healthis.Model
                         descricao_reacao AS DescricaoReacao,
                         unidade_saude_id_unidade_saude AS UnidadeSaudeID,
                         unidade_saude_endereco_id_endereco AS EnderecoID
-                    FROM vacinacao;
+                    FROM vacinacao
                     WHERE id_vacinacao = @ID";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -168,8 +168,15 @@ namespace Healthis.Model
                     vacinacao = conn.Query<Vacinacao>(query, new { ID }).FirstOrDefault();
                 }
 
-                vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
-                vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
+                if (vacinacao == null)
+                    return vacinacao;
+
+                if (vacinacao.EnderecoID != 0)
+                    vacinacao.Endereco = new EnderecoModel(_connectionString).Get(vacinacao.EnderecoID);
+
+                if (vacinacao.UnidadeSaudeID != 0)
+                    vacinacao.UnidadeSaude = new UnidadeSaudeModel(_connectionString).Get(vacinacao.UnidadeSaudeID);
+
                 vacinacao.Vacinas = GetVacinacaoVacinas(vacinacao.ID);
             }
             catch (Exception ex)

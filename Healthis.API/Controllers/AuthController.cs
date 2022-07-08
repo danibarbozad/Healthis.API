@@ -1,7 +1,12 @@
 ﻿using Healthis.API.Authentication;
+using Healthis.Entities;
+using Healthis.Entities.ApiEntities;
+using Healthis.Service;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -38,7 +43,20 @@ namespace Healthis.API.Controllers
                 return errorResult;
             }
 
-            return Ok();
+            UsuarioService usuarioService = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
+            Usuario usuario = usuarioService.Create(new Usuario()
+            {
+                UserName = userModel.UserName,
+                Email = userModel.Email
+            });
+
+            return Ok(new 
+            {
+                Message = "Usuário criado com sucesso",
+                UsuarioID = usuario.ID,
+                usuario.Email,
+                usuario.UserName
+            });
         }
 
         protected override void Dispose(bool disposing)
