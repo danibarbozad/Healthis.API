@@ -215,6 +215,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\healthisapi - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\healthisapi - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Healthis.Entities\Healthis.Entities.csproj">
