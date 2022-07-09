@@ -188,6 +188,45 @@ namespace Healthis.Model
             return usuario;
         }
 
+        public Usuario GetUserByUserName(string userName)
+        {
+            Usuario usuario;
+            try
+            {
+                string query = $@"
+                    SELECT 
+	                    id_usuario AS ID,
+                        nome_usuario AS Nome,
+                        cpf AS CPF,
+                        sexo AS Sexo,
+                        dt_nascimento AS DataNascimento,
+                        email AS Email,
+                        telefone AS Telefone,
+                        endereco_id_endereco AS EnderecoID,
+                        username AS UserName
+                    FROM usuario
+                    WHERE username = @UserName;";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    usuario = conn.Query<Usuario>(query, new { UserName = userName }).FirstOrDefault();
+                }
+
+                if (usuario == null)
+                    return usuario;
+
+                if (usuario.EnderecoID.HasValue)
+                    usuario.Endereco = new EnderecoModel(_connectionString).Get(usuario.EnderecoID.Value);
+                usuario.Vacinacoes = GetUsuarioVacinacoes(usuario.ID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return usuario;
+        }
+
         public List<Vacinacao> GetUsuarioVacinacoes(int usuarioID)
         {
             List<Vacinacao> vacinacoes = new List<Vacinacao>();

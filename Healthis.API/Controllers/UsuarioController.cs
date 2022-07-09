@@ -32,6 +32,15 @@ namespace Healthis.API.Controllers
             return service.Get(id);
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("api/user/getByUserName")]
+        public Usuario GetByUserName([FromBody] UserJSON userName)
+        {
+            UsuarioService service = new UsuarioService(ConfigurationManager.ConnectionStrings["HealthisDB"].ConnectionString);
+            return service.Get(userName.UserName);
+        }
+
         //[HttpPost]
         //[Route("api/user/create")]
         //public Usuario Create([FromBody] UsuarioRequest usuario)

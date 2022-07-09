@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ApiEntities\EnderecoRequest.cs" />
     <Compile Include="ApiEntities\UnidadeSaudeRequest.cs" />
+    <Compile Include="ApiEntities\UserJSON.cs" />
     <Compile Include="ApiEntities\UsuarioRequest.cs" />
     <Compile Include="ApiEntities\UsuarioResponse.cs" />
     <Compile Include="ApiEntities\VacinacaoRequest.cs" />
